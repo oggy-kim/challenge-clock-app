@@ -1,25 +1,29 @@
-# New Project
+# Clock app Challenge(frontendmentor.io)
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
+[Challenge Link](https://www.frontendmentor.io/challenges/clock-app-LMFaxFwrM)
 
-## Available Scripts
+- How to run
 
-### npm start
+```terminal
+npm i
+npm run start
+```
 
-Runs the app in the development mode.
-Open http://localhost:8080 to view it in the browser.
+## Story
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+Your users should be able to:
 
-### npm run build
+- View the optimal layout for the site depending on their device's screen size
+- See hover states for all interactive elements on the page
+- View the current time and location information based on their IP address
+- View additional information about the date and time in the expanded state
+- Be shown the correct greeting and background image based on the time of day they're visiting the site
+- Generate random programming quotes by clicking the refresh icon near the quote
 
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
+## Skill
 
-**For the best production performance:** Add a build bundler plugin like "@snowpack/plugin-webpack" to your `snowpack.config.mjs` config file.
+- React
 
-### npm test
+- Typescript
 
-Launches the application test runner.
-Run with the `--watch` flag (`npm test -- --watch`) to run in interactive watch mode.
+### Have a nice day! 👨🏻‍💻
