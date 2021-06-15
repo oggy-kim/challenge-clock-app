@@ -13,6 +13,8 @@ const StyledContainer = styled.div`
   background-size: cover;
 `;
 
+// TODO : 이번에는 state change를 어떻게 써볼지 결정
+// TODO 공통 : SCSS 적용 고려
 function App() {
   return (
     <StyledContainer>

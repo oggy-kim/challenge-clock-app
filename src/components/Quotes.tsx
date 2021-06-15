@@ -11,6 +11,8 @@ const StyledQuotes = styled.div`
   flex-direction: column;
 `;
 
+// TODO : refresh icon 수정
+// TODO : API 연동을 통한 quotes 랜덤 불러오기
 function Quotes() {
   return (
     <StyledDiv>
