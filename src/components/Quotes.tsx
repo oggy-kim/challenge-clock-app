@@ -1,31 +1,36 @@
 import * as React from 'react';
+import { useRecoilState } from 'recoil';
+import { quoteState } from '../recoil';
 import styled from 'styled-components';
+import refreshSVG from '../assets/refresh-icon.png';
 
 const StyledDiv = styled.div`
   display: flex;
-  width: 50%;
+  align-items: flex-start;
 `;
 
 const StyledQuotes = styled.div`
   display: flex;
+  width: 40%;
   flex-direction: column;
 `;
 
-// TODO : refresh icon 수정
-// TODO : API 연동을 통한 quotes 랜덤 불러오기
 function Quotes() {
+  const [{ author, content }, refreshQuote] = useRecoilState(quoteState);
+
   return (
     <StyledDiv>
       <StyledQuotes>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-          esse dolorum sapiente exercitationem excepturi obcaecati quos modi
-          culpa aliquid nulla, mollitia perferendis voluptatum, accusantium
-          corrupti reprehenderit, quis vitae labore at?
-        </p>
-        <strong>ipsum lorem</strong>
+        <p>{content}</p>
+        <strong>{author}</strong>
       </StyledQuotes>
-      <button>refresh</button>
+      <p>
+        <img
+          src={refreshSVG}
+          style={{ objectFit: 'none' }}
+          onClick={() => refreshQuote({ author, content })}
+        />
+      </p>
     </StyledDiv>
   );
 }

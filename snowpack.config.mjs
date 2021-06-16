@@ -27,6 +27,7 @@ export default {
     /* ... */
   },
   devOptions: {
+    open: 'false',
     /* ... */
   },
   buildOptions: {
