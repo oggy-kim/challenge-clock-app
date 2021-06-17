@@ -1,6 +1,9 @@
 import * as React from 'react';
+import { useRecoilValue } from 'recoil';
+import { timeState, locationState } from '../recoil';
 
 import styled from 'styled-components';
+import { clockFormat } from '../util/timeFormat';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -39,6 +42,8 @@ const StyledButton = styled.button`
 // TODO : 내부 로직 및 component 분리 고려
 function TimeContainer() {
   const [active, setActive] = React.useState(false);
+  const { abbreviation, datetime } = useRecoilValue(timeState);
+  const { region, country } = useRecoilValue(locationState);
 
   const Greeting = () => {
     return <StyledSpan>GOOD MORNING, IT'S CURRENTLY</StyledSpan>;
@@ -47,7 +52,9 @@ function TimeContainer() {
   const Geolocation = () => {
     return (
       <StyledSpan>
-        <strong>IN LONDON, UK</strong>
+        <strong>
+          IN {region.toUpperCase()}, {country.toUpperCase()}
+        </strong>
       </StyledSpan>
     );
   };
@@ -55,8 +62,8 @@ function TimeContainer() {
   const Clock = () => {
     return (
       <span>
-        <StyledClockSpan>11:37</StyledClockSpan>
-        BST
+        <StyledClockSpan>{clockFormat(datetime)}</StyledClockSpan>
+        {abbreviation}
       </span>
     );
   };

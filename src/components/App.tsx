@@ -14,7 +14,9 @@ function App() {
         <React.Suspense fallback={<Spinner />}>
           <Quotes />
         </React.Suspense>
-        <TimeContainer />
+        <React.Suspense fallback={<Spinner />}>
+          <TimeContainer />
+        </React.Suspense>
       </div>
     </RecoilRoot>
   );
