@@ -1,0 +1,34 @@
+@import '../style.global.scss';
+
+@mixin changeBackground($size, $time) {
+  background-image: url('/assets/#{$size}/bg-image-#{$time}time.jpg');
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+  padding: 50px 100px 50px 100px;
+  background-image: url('/assets/desktop/bg-image-daytime.jpg');
+  background-size: cover;
+
+  &.night {
+    @include changeBackground(desktop, night);
+    @include tablet {
+      @include changeBackground(tablet, night);
+    }
+    @include mobile {
+      @include changeBackground(mobile, night);
+    }
+  }
+
+  &.day {
+    @include changeBackground(desktop, day);
+    @include tablet {
+      @include changeBackground(tablet, day);
+    }
+    @include mobile {
+      @include changeBackground(mobile, day);
+    }
+  }
+}

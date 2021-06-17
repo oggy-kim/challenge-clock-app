@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useRecoilState } from 'recoil';
 import { quoteState } from '../recoil';
 import styled from 'styled-components';
-import refreshSVG from '../assets/refresh-icon.png';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -26,7 +25,7 @@ function Quotes() {
       </StyledQuotes>
       <p>
         <img
-          src={refreshSVG}
+          src="assets/refresh-icon.png"
           style={{ objectFit: 'none' }}
           onClick={() => refreshQuote({ author, content })}
         />

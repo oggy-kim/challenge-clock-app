@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import img from '../assets/icon-arrow-up.png';
-
 const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,10 +64,8 @@ function TimeContainer() {
   const ToggleButton = ({ active }: { active: boolean }) => {
     return (
       <StyledButton>
-        <span style={{ fontSize: '15px', marginRight: '5px' }}>
-          {!active ? 'MORE' : 'LESS'}
-        </span>
-        <img src={img} width="30px" />
+        <span style={{ fontSize: '15px', marginRight: '5px' }}>{!active ? 'MORE' : 'LESS'}</span>
+        <img src="assets/icon-arrow-up.png" width="30px" />
       </StyledButton>
     );
   };

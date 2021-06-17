@@ -26,4 +26,12 @@ Your users should be able to:
 
 - Typescript
 
+## Study point
+
+- component
+
+- Lifecycle
+
+- Handling events
+
 ### Have a nice day! 👨🏻‍💻
