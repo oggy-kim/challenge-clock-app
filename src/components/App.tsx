@@ -14,7 +14,13 @@ function App() {
         <React.Suspense fallback={<Spinner />}>
           <Quotes />
         </React.Suspense>
-        <React.Suspense fallback={<Spinner />}>
+        <React.Suspense
+          fallback={
+            <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'flex-end' }}>
+              <Spinner />
+            </div>
+          }
+        >
           <TimeContainer />
         </React.Suspense>
       </div>

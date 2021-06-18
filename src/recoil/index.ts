@@ -1,5 +1,5 @@
 import { atom, selector, useRecoilValue } from "recoil";
-import { getCurrentTime } from "../api/timezone";
+import { getCurrentTime, getSunPosition } from "../api/timezone";
 import { getRandomQuote } from "../api/quotes";
 import { getMyPosition } from "../api/geolocation";
 
@@ -38,3 +38,15 @@ export const locationState = selector({
         return { region, country };
     }
 })
+
+export const greetingState = selector({
+    key: 'greetingState',
+    get: async ({get}) => {
+        get(timeState);
+        const {client_ip } = await useRecoilValue(timeState);
+        const { latitude, longitude } = await getMyPosition(client_ip);
+        const { sunset, sunrise } = await getSunPosition(latitude, longitude);
+        return { sunset, sunrise };
+    }
+})
+

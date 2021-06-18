@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
-import { timeState, locationState } from '../recoil';
+import { timeState, locationState, greetingState } from '../recoil';
 
 import styled from 'styled-components';
 import { clockFormat } from '../util/timeFormat';
+import dayjs from 'dayjs';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -44,9 +45,17 @@ function TimeContainer() {
   const [active, setActive] = React.useState(false);
   const { abbreviation, datetime } = useRecoilValue(timeState);
   const { region, country } = useRecoilValue(locationState);
+  const { sunset, sunrise } = useRecoilValue(greetingState);
 
   const Greeting = () => {
-    return <StyledSpan>GOOD MORNING, IT'S CURRENTLY</StyledSpan>;
+    const translatedTime = dayjs(datetime).format('HH:mm:ss');
+    const sunriseTime = dayjs(sunrise).format('HH:mm:ss');
+    const sunsetTime = dayjs(sunset).format('HH:mm:ss');
+    return translatedTime < sunriseTime || translatedTime > sunsetTime ? (
+      <StyledSpan>🌕 GOOD NIGHT, IT'S CURRENTLY</StyledSpan>
+    ) : (
+      <StyledSpan>🌞 GOOD MORNING, IT'S CURRENTLY</StyledSpan>
+    );
   };
 
   const Geolocation = () => {
