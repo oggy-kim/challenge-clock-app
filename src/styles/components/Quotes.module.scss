@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  padding: 50px;
+
+  &.none {
+    display: none;
+  }
+}
+
+.quotes {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+}
+
+.refreshbutton {
+  object-fit: contain;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

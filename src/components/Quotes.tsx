@@ -1,36 +1,40 @@
 import * as React from 'react';
-import { useRecoilState } from 'recoil';
-import { quoteState } from '../recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { activeState, quoteState } from '../recoil';
 import styled from 'styled-components';
+import Spinner from './Spinner';
 
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;
-
-const StyledQuotes = styled.div`
-  display: flex;
-  width: 40%;
-  flex-direction: column;
-`;
+import style from '../styles/components/Quotes.module.scss';
 
 function Quotes() {
-  const [{ author, content }, refreshQuote] = useRecoilState(quoteState);
+  const active = useRecoilValue(activeState);
+
+  const Quote = () => {
+    const [{ author, content }, refreshQuote] = useRecoilState(quoteState);
+    return (
+      <>
+        <div className={`${style.quotes}`}>
+          <p>{content}</p>
+          <strong>{author}</strong>
+        </div>
+        <p>
+          <img
+            className={`${style.refreshbutton}`}
+            src="assets/refresh-icon.png"
+            style={{ objectFit: 'none' }}
+            onClick={() => refreshQuote({ author, content })}
+          />
+        </p>
+      </>
+    );
+  };
 
   return (
-    <StyledDiv>
-      <StyledQuotes>
-        <p>{content}</p>
-        <strong>{author}</strong>
-      </StyledQuotes>
-      <p>
-        <img
-          src="assets/refresh-icon.png"
-          style={{ objectFit: 'none' }}
-          onClick={() => refreshQuote({ author, content })}
-        />
-      </p>
-    </StyledDiv>
+    <div className={`${style.container} ${style[active ? 'none' : 'active']}`}>
+      <React.Suspense fallback={<Spinner />}>
+        <Quote />
+      </React.Suspense>
+    </div>
   );
 }
 

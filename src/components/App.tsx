@@ -1,30 +1,33 @@
 import * as React from 'react';
-import { RecoilRoot } from 'recoil';
 
 import '../styles/style.global.scss';
 import style from '../styles/components/App.module.scss';
 import Quotes from './Quotes';
 import TimeContainer from './TimeContainer';
-import Spinner from '../components/Spinner';
+
+import DayContainer from './DayContainer';
 
 function App() {
+  const [day, setDay] = React.useState('loading');
+
+  const LoadingDiv = () => {
+    return <div className={`${style.loading}`} />;
+  };
+
+  const BackgroundDiv = ({ children }) => {
+    return <div className={`${style.background} ${style[day]}`}>{children}</div>;
+  };
+
   return (
-    <RecoilRoot>
-      <div className={`${style.container} ${style.day}`}>
-        <React.Suspense fallback={<Spinner />}>
+    <React.Suspense fallback={<LoadingDiv />}>
+      <BackgroundDiv>
+        <div className={`${style.container}`}>
           <Quotes />
-        </React.Suspense>
-        <React.Suspense
-          fallback={
-            <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'flex-end' }}>
-              <Spinner />
-            </div>
-          }
-        >
-          <TimeContainer />
-        </React.Suspense>
-      </div>
-    </RecoilRoot>
+          <TimeContainer setDay={setDay} />
+          <DayContainer />
+        </div>
+      </BackgroundDiv>
+    </React.Suspense>
   );
 }
 

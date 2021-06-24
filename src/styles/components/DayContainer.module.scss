@@ -1,0 +1,15 @@
+.daycontainer {
+  display: grid;
+
+  &.none {
+    display: none;
+  }
+
+  &.active {
+    visibility: visible;
+    margin-top: auto;
+    flex: 0 0 50%;
+    background-color: rgba(gray, 0.1);
+    backdrop-filter: blur(10px);
+  }
+}

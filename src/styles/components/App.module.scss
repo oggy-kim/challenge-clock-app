@@ -4,15 +4,25 @@
   background-image: url('/assets/#{$size}/bg-image-#{$time}time.jpg');
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 100px);
-  padding: 50px 100px 50px 100px;
-  background-image: url('/assets/desktop/bg-image-daytime.jpg');
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  height: 100vh;
+  width: 100vw;
+}
+
+.background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
   background-size: cover;
 
   &.night {
+    background-color: #c30;
+    z-index: -1;
     @include changeBackground(desktop, night);
     @include tablet {
       @include changeBackground(tablet, night);
@@ -23,6 +33,8 @@
   }
 
   &.day {
+    background-color: #fff;
+    z-index: -1;
     @include changeBackground(desktop, day);
     @include tablet {
       @include changeBackground(tablet, day);
@@ -30,5 +42,28 @@
     @include mobile {
       @include changeBackground(mobile, day);
     }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  &.blur {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -ms-filter: blur(5px);
+    -o-filter: blur(5px);
+    filter: blur(5px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
   }
 }

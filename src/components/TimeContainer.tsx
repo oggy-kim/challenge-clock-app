@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { useRecoilValue } from 'recoil';
-import { timeState, locationState, greetingState } from '../recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { activeState, timeState, locationState, greetingState } from '../recoil';
 
 import styled from 'styled-components';
 import { clockFormat } from '../util/timeFormat';
 import dayjs from 'dayjs';
+import Spinner from './Spinner';
+import style from '../styles/components/TimeContainer.module.scss';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -23,42 +25,30 @@ const StyledClockSpan = styled.span`
   margin-bottom: 0;
 `;
 
-const StyledBottomDiv = styled.div`
-  margin-top: auto;
-  display: flex;
-  align-items: flex-end;
-`;
-
-const StyledButton = styled.button`
-  border: none;
-  border-radius: 50px;
-  width: 100px;
-  height: 50px;
-  color: #2a2a2a;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 // TODO : 내부 로직 및 component 분리 고려
-function TimeContainer() {
-  const [active, setActive] = React.useState(false);
-  const { abbreviation, datetime } = useRecoilValue(timeState);
-  const { region, country } = useRecoilValue(locationState);
-  const { sunset, sunrise } = useRecoilValue(greetingState);
+function TimeContainer({ setDay }) {
+  const [active, setActive] = useRecoilState(activeState);
 
   const Greeting = () => {
+    const { datetime } = useRecoilValue(timeState);
+    const { sunset, sunrise } = useRecoilValue(greetingState);
+
     const translatedTime = dayjs(datetime).format('HH:mm:ss');
     const sunriseTime = dayjs(sunrise).format('HH:mm:ss');
     const sunsetTime = dayjs(sunset).format('HH:mm:ss');
-    return translatedTime < sunriseTime || translatedTime > sunsetTime ? (
-      <StyledSpan>🌕 GOOD NIGHT, IT'S CURRENTLY</StyledSpan>
-    ) : (
+    const flag = translatedTime > sunriseTime && translatedTime < sunsetTime;
+    setDay(flag ? 'day' : 'night');
+    return flag ? (
       <StyledSpan>🌞 GOOD MORNING, IT'S CURRENTLY</StyledSpan>
+    ) : (
+      <StyledSpan>🌕 GOOD NIGHT, IT'S CURRENTLY</StyledSpan>
     );
   };
 
   const Geolocation = () => {
+    const { datetime } = useRecoilValue(timeState);
+    const { region, country } = useRecoilValue(locationState);
+
     return (
       <StyledSpan>
         <strong>
@@ -69,33 +59,47 @@ function TimeContainer() {
   };
 
   const Clock = () => {
+    const { abbreviation } = useRecoilValue(timeState);
+
     return (
       <span>
-        <StyledClockSpan>{clockFormat(datetime)}</StyledClockSpan>
+        <StyledClockSpan>{clockFormat(new Date())}</StyledClockSpan>
         {abbreviation}
       </span>
     );
   };
 
-  const ToggleButton = ({ active }: { active: boolean }) => {
+  const ToggleButton = () => {
     return (
-      <StyledButton>
+      <button
+        className={`${style.togglebutton} ${style[active ? 'active' : 'none']}`}
+        onClick={handleToggle}
+      >
         <span style={{ fontSize: '15px', marginRight: '5px' }}>{!active ? 'MORE' : 'LESS'}</span>
         <img src="assets/icon-arrow-up.png" width="30px" />
-      </StyledButton>
+      </button>
     );
   };
 
-  return (
-    <StyledBottomDiv>
-      <StyledDiv>
-        <Greeting />
-        <Clock />
-        <Geolocation />
-      </StyledDiv>
+  const handleToggle = () => {
+    setActive(active => !active);
+  };
 
-      <ToggleButton active={active} />
-    </StyledBottomDiv>
+  return (
+    <div className={`${style.container} ${style[active ? 'none' : 'active']}`}>
+      <StyledDiv>
+        <React.Suspense fallback={<Spinner />}>
+          <Greeting />
+        </React.Suspense>
+        <React.Suspense fallback={<Spinner />}>
+          <Clock />
+        </React.Suspense>
+        <React.Suspense fallback={<Spinner />}>
+          <Geolocation />
+        </React.Suspense>
+      </StyledDiv>
+      <ToggleButton />
+    </div>
   );
 }
 
