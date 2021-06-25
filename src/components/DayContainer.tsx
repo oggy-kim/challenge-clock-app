@@ -3,9 +3,12 @@ import { useRecoilValue } from 'recoil';
 import { activeState, timeState } from '../recoil';
 import style from '../styles/components/DayContainer.module.scss';
 
-function DayContainer({ day }) {
+interface Props {
+  day: 'loading' | 'day' | 'night';
+}
+
+function DayContainer({ day }: Props) {
   const active = useRecoilValue(activeState);
-  console.log(day);
 
   const DayDetail = () => {
     const data = useRecoilValue(timeState);
@@ -16,8 +19,6 @@ function DayContainer({ day }) {
       { title: 'DAY OF THE YEAR', value: day_of_year },
       { title: 'WEEK NUMBER', value: week_number },
     ];
-    console.log(items);
-
     return (
       <>
         {items.map(({ title, value }) => {
@@ -34,9 +35,7 @@ function DayContainer({ day }) {
 
   return (
     <div className={`${style.daycontainer} ${style[day]} ${style[active ? 'active' : 'none']}`}>
-      <React.Suspense fallback={<div></div>}>
-        <DayDetail />
-      </React.Suspense>
+      <DayDetail />
     </div>
   );
 }

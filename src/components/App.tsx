@@ -8,7 +8,7 @@ import TimeContainer from './TimeContainer';
 import DayContainer from './DayContainer';
 
 function App() {
-  const [day, setDay] = React.useState('loading');
+  const [day, setDay] = React.useState<'loading' | 'day' | 'night'>('loading');
 
   const LoadingDiv = () => {
     return <div className={`${style.loading}`} />;

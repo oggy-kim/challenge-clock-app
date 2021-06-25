@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const clockFormat = (date: Date) => {
-    return dayjs(date).format('HH:mm');
-}
+  return dayjs(date).format('HH:mm');
+};

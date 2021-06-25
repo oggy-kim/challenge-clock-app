@@ -14,11 +14,14 @@ const StyledDiv = styled.div`
   margin-right: auto;
 `;
 
-// TODO : 내부 로직 및 component 분리 고려
-function TimeContainer({ setDay }) {
+interface Props {
+  setDay: React.Dispatch<React.SetStateAction<'loading' | 'day' | 'night'>>;
+}
+
+function TimeContainer({ setDay }: Props) {
   const [active, setActive] = useRecoilState(activeState);
 
-  const Greeting = () => {
+  const Greeting = React.useCallback(() => {
     const { datetime } = useRecoilValue(timeState);
     const { sunset, sunrise } = useRecoilValue(greetingState);
 
@@ -26,13 +29,15 @@ function TimeContainer({ setDay }) {
     const sunriseTime = dayjs(sunrise).format('HH:mm:ss');
     const sunsetTime = dayjs(sunset).format('HH:mm:ss');
     const flag = translatedTime > sunriseTime && translatedTime < sunsetTime;
-    setDay(flag ? 'day' : 'night');
+    React.useEffect(() => {
+      flag ? setDay('day') : setDay('night');
+    }, [flag]);
     return flag ? (
       <span className={`${style.word}`}>🌞 GOOD MORNING, IT'S CURRENTLY</span>
     ) : (
       <span className={`${style.word}`}>🌕 GOOD NIGHT, IT'S CURRENTLY</span>
     );
-  };
+  }, []);
 
   const Geolocation = () => {
     const { datetime } = useRecoilValue(timeState);
@@ -48,11 +53,19 @@ function TimeContainer({ setDay }) {
   };
 
   const Clock = () => {
+    const [time, setTime] = React.useState(clockFormat(new Date()));
     const { abbreviation } = useRecoilValue(timeState);
-
+    React.useEffect(() => {
+      let id = setInterval(() => {
+        clockFormat(new Date()) !== time && setTime(clockFormat(new Date()));
+      }, 1000);
+      return () => {
+        clearInterval(id);
+      };
+    }, []);
     return (
       <span>
-        <span className={`${style.clock}`}>{clockFormat(new Date())}</span>
+        <span className={`${style.clock}`}>{time}</span>
         {abbreviation}
       </span>
     );
