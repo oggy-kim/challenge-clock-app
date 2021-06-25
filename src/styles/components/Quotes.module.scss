@@ -1,3 +1,4 @@
+@import '../mediaQuery';
 .container {
   display: flex;
   align-items: flex-start;
@@ -6,12 +7,24 @@
   &.none {
     display: none;
   }
+
+  @include mobile {
+    padding: 30px;
+  }
 }
 
 .quotes {
   display: flex;
   width: 40%;
   flex-direction: column;
+
+  @include tablet {
+    width: 100%;
+  }
+
+  @include mobile {
+    font-size: 0.5em;
+  }
 }
 
 .refreshbutton {

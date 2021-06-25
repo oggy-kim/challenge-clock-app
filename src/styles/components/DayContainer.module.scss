@@ -1,5 +1,16 @@
+@import '../style.global';
+
 .daycontainer {
   display: grid;
+  backdrop-filter: blur(10px);
+  grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+  padding: 30px;
+  gap: 50px 50px;
+  align-items: center;
+
+  @include mobile {
+    grid-template: repeat(4, 1fr) / repeat(1, 1fr);
+  }
 
   &.none {
     display: none;
@@ -8,8 +19,35 @@
   &.active {
     visibility: visible;
     margin-top: auto;
-    flex: 0 0 50%;
-    background-color: rgba(gray, 0.1);
-    backdrop-filter: blur(10px);
+    flex: 0 0 40%;
+  }
+
+  &.night {
+    color: #fff;
+    background-color: rgba(black, 0.5);
+  }
+
+  &.day {
+    color: #fff;
+    background-color: rgba(lightgray, 0.5);
+  }
+
+  & > div {
+    padding-left: 100px;
+
+    @include tablet {
+      padding-left: 30px;
+    }
+    & > p {
+      font-size: 1em;
+    }
+    @include tablet {
+      font-size: 0.5em;
+    }
+    & > h1 {
+      margin: 0;
+      font-size: 5em;
+      font-weight: 600;
+    }
   }
 }

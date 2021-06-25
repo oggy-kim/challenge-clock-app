@@ -24,7 +24,7 @@ function App() {
         <div className={`${style.container}`}>
           <Quotes />
           <TimeContainer setDay={setDay} />
-          <DayContainer />
+          <DayContainer day={day} />
         </div>
       </BackgroundDiv>
     </React.Suspense>

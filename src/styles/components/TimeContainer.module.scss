@@ -1,15 +1,22 @@
+@import '../style.global';
+
 .container {
   display: flex;
   padding: 50px;
+  align-items: flex-end;
+  margin-top: auto;
 
-  &.none {
-    align-items: flex-end;
-    flex: 1 1 30%;
+  @include tablet {
+    flex-direction: column;
+    align-items: baseline;
+  }
+  @include mobile {
+    padding: 30px;
   }
 
-  &.active {
-    margin-top: auto;
-    align-items: flex-end;
+  &.none {
+    flex: 1 1 30%;
+    justify-content: flex-end;
   }
 }
 
@@ -23,6 +30,10 @@
   align-items: center;
   justify-content: center;
 
+  @include tablet {
+    margin-top: 30px;
+  }
+
   &:hover {
     cursor: pointer;
   }
@@ -33,5 +44,24 @@
 
   &.active > img {
     transform: rotateY(180deg);
+  }
+}
+
+.clock {
+  font-size: 150px;
+  font-weight: 600;
+  margin-right: auto;
+  margin-bottom: 0;
+
+  @include mobile {
+    font-size: 50px;
+  }
+}
+
+.word {
+  font-size: 1em;
+
+  @include mobile {
+    font-size: 0.5em;
   }
 }

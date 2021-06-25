@@ -14,17 +14,6 @@ const StyledDiv = styled.div`
   margin-right: auto;
 `;
 
-const StyledSpan = styled.span`
-  font-size: 20px;
-`;
-
-const StyledClockSpan = styled.span`
-  font-size: 150px;
-  font-weight: 600;
-  margin-right: auto;
-  margin-bottom: 0;
-`;
-
 // TODO : 내부 로직 및 component 분리 고려
 function TimeContainer({ setDay }) {
   const [active, setActive] = useRecoilState(activeState);
@@ -39,9 +28,9 @@ function TimeContainer({ setDay }) {
     const flag = translatedTime > sunriseTime && translatedTime < sunsetTime;
     setDay(flag ? 'day' : 'night');
     return flag ? (
-      <StyledSpan>🌞 GOOD MORNING, IT'S CURRENTLY</StyledSpan>
+      <span className={`${style.word}`}>🌞 GOOD MORNING, IT'S CURRENTLY</span>
     ) : (
-      <StyledSpan>🌕 GOOD NIGHT, IT'S CURRENTLY</StyledSpan>
+      <span className={`${style.word}`}>🌕 GOOD NIGHT, IT'S CURRENTLY</span>
     );
   };
 
@@ -50,11 +39,11 @@ function TimeContainer({ setDay }) {
     const { region, country } = useRecoilValue(locationState);
 
     return (
-      <StyledSpan>
+      <span className={`${style.word}`}>
         <strong>
           IN {region.toUpperCase()}, {country.toUpperCase()}
         </strong>
-      </StyledSpan>
+      </span>
     );
   };
 
@@ -63,7 +52,7 @@ function TimeContainer({ setDay }) {
 
     return (
       <span>
-        <StyledClockSpan>{clockFormat(new Date())}</StyledClockSpan>
+        <span className={`${style.clock}`}>{clockFormat(new Date())}</span>
         {abbreviation}
       </span>
     );
